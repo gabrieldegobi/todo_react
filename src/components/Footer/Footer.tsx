@@ -6,9 +6,9 @@ type Props = {};
 
 const Footer = (props: Props) => {
   return (
-    <footer>
+    <footer className={styles.footer}>
       <p>
-        <span>React + TS Todo</span>@ 2025
+        <span>React + TS Todo</span> @ 2025
       </p>
     </footer>
   );
