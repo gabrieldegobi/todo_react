@@ -4,10 +4,14 @@ import { useState } from "react";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Formulario from "./components/Formulario/Formulario";
-import Lista from "./components/Lista/LIsta";
+
 
 //CSS
 import styles from "./App.module.css";
+import Lista from "./components/Lista/Lista";
+
+//Interface
+//import { ITask } from "./interfaces/Task";
 
 function App() {
   return (
@@ -17,7 +21,9 @@ function App() {
         <div className={styles.main}>
           <div>
             <h2>O que você vai fazer?</h2>
-            <Formulario />
+            <Formulario
+            btnText="Criar Tarefa"
+            />
           </div>
 
           <div>
