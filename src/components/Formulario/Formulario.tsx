@@ -1,20 +1,40 @@
-import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import React, {
+  useState,
+  type ChangeEvent,
+  type FormEvent,
+  useEffect,
+} from "react";
 
 import styles from "./Formulario.module.css";
 
 //Interfaces
-//import { ITask } from "../../interfaces/Task";
+import { type ITask } from "../../interfaces/Task";
 
-type Props = {
+interface Props {
   btnText: string;
-};
+  taskList: ITask[];
+  setTaskList?: React.Dispatch<React.SetStateAction<ITask[]>>;
+}
 
-const Formulario = ({ btnText }: Props) => {
+const Formulario = ({ btnText, taskList,setTaskList }: Props) => {
   const [id, setId] = useState<number>(0);
   const [title, setTitle] = useState<string>("");
   const [difficulty, setDifficulty] = useState<number>(0);
+  
+  
+  const addTaskHandle = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if(title === ""||difficulty===0){
+      
+    }
+    const id = Math.floor(Math.random() * 1000);
+    const newTask: ITask = { id, title, difficulty };
 
-  const addTaskHandle = () => {};
+    setTaskList!([...taskList,newTask])
+    setTitle('')
+    setDifficulty(0)
+    console.log(taskList)
+  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === "title") {
@@ -23,7 +43,6 @@ const Formulario = ({ btnText }: Props) => {
       setDifficulty(parseInt(e.target.value));
     }
   };
-  console.log(title)
 
   return (
     <form onSubmit={addTaskHandle} className={styles.form} action="">
@@ -34,6 +53,8 @@ const Formulario = ({ btnText }: Props) => {
           name="title"
           placeholder="Título da Tarefa"
           onChange={handleChange}
+          value={title}
+          required
         />
       </div>
       <div className={styles.input_container}>
@@ -43,6 +64,8 @@ const Formulario = ({ btnText }: Props) => {
           name="difficulty"
           placeholder="Dificuldade da Tarefa"
           onChange={handleChange}
+          value={difficulty}
+         
         />
       </div>
       <input type="submit" value={btnText} />
