@@ -15,7 +15,9 @@ import { type ITask } from "./interfaces/Task";
 
 function App() {
   const [taskList, setTaskList] = useState<ITask[]>([]);
+  const [taskToUpdate, setTaskToUpdate] = useState<ITask | null>(null);
 
+  // Deleta uma task
   const deleteTask = (id: number) => {
     setTaskList(
       taskList.filter((task) => {
@@ -24,11 +26,36 @@ function App() {
     );
   };
 
+  // Confere se o modal esta aparecendo e o esconde, ou inverso
+  const hideOrShowModal = (display: boolean) => {
+    const modal = document.querySelector("#modal");
+    if (display) {
+      modal!.classList.remove("hide");
+    } else {
+      modal!.classList.add("hide");
+    }
+  };
+
+  // Edita uma task
+  const editTask = (task: ITask): void => {
+    hideOrShowModal(true);
+    setTaskToUpdate(task);
+  };
+
+  
+
+
   return (
     <>
       <div>
         <Modal
-          children={<Formulario btnText="Editar Tarefa" taskList={taskList} />}
+          children={
+            <Formulario
+              btnText="Editar Tarefa"
+              taskList={taskList}
+              task={taskToUpdate}
+            />
+          }
         />
         <Header />
         <div className={styles.main}>
@@ -43,7 +70,11 @@ function App() {
 
           <div>
             <h2>Suas Tarefas</h2>
-            <Lista taskList={taskList} handleDelete={deleteTask} />
+            <Lista
+              taskList={taskList}
+              handleDelete={deleteTask}
+              handleEdit={editTask}
+            />
           </div>
         </div>
         <Footer />
