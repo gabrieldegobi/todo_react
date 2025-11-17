@@ -15,10 +15,16 @@ interface Props {
   taskList: ITask[];
   setTaskList?: React.Dispatch<React.SetStateAction<ITask[]>>;
   task?: ITask | null;
-  handleUpdate?():null
+  handleUpdate?(task: ITask): void;
 }
 
-const Formulario = ({ btnText, taskList, setTaskList, task,handleUpdate }: Props) => {
+const Formulario = ({
+  btnText,
+  taskList,
+  setTaskList,
+  task,
+  handleUpdate,
+}: Props) => {
   const [id, setId] = useState<number>(0);
   const [title, setTitle] = useState<string>("");
   const [difficulty, setDifficulty] = useState<number>(0);
@@ -35,18 +41,19 @@ const Formulario = ({ btnText, taskList, setTaskList, task,handleUpdate }: Props
   // Adiciona uma task a lista
   const addTaskHandle = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(handleUpdate){
-console.log(handleUpdate)
-    }else{
+    if (handleUpdate) {
+      const task: ITask = { id, title, difficulty };
+      handleUpdate(task);
+    } else {
       if (title === "" || difficulty === 0) {
-    }
-    const id = Math.floor(Math.random() * 1000);
-    const newTask: ITask = { id, title, difficulty };
+      }
+      const id = Math.floor(Math.random() * 1000);
+      const newTask: ITask = { id, title, difficulty };
 
-    setTaskList!([...taskList, newTask]);
-    setTitle("");
-    setDifficulty(0);}
-    
+      setTaskList!([...taskList, newTask]);
+      setTitle("");
+      setDifficulty(0);
+    }
   };
 
   // Atualiza os imputs
